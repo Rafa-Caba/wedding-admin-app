@@ -49,13 +49,13 @@ const Boton = styled.button`
 	margin: 0px 2px;
 	transition: .3s ease all;
 	outline: none;
-	background: #ba72ff;
 	color: #fff;
 	font-size: 12px;
     border-bottom: 2px solid rgba(0,0,0,.2);
+	background: #982bff;
 
 	&:hover {
-		background: #a343fd;
+		background: #955EFF;
 	}
 
     @media (max-width: 600px) {

@@ -1,22 +1,41 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import FormularioInvitado from './components/FormularioInvitado';
 import ListaFamilias from './components/ListaFamilias';
+import Bienvenida from './weddingPublicApp/components/Bienvenida';
+import Confirmacion from './weddingPublicApp/components/Confirmacion';
+import Despedida from './weddingPublicApp/components/Despedida';
 
 const App = () => {
   return (
-    <Contenedor>
-      <Titulo>Wedding Admin</Titulo>
-	  <FormularioInvitado />
-	  <ListaFamilias />
-    </Contenedor>
+	<BrowserRouter>
+		<div>
+			<Routes>
+				<Route path="/admin" element={
+					<ContenedorAdmin>
+						<Titulo>Wedding Admin</Titulo>
+						<FormularioInvitado />
+						<ListaFamilias />
+					</ContenedorAdmin>
+				}>
+				</Route>
+				<Route path="/:codigo" element={<Bienvenida />} />
+				<Route path="/confirmacion/:codigo" element={<Confirmacion />} />
+				<Route path="/despedida/:trigger" element={<Despedida />} />
+			</Routes>
+		</div>
+	</BrowserRouter>
   );
 }
  
-const Contenedor = styled.div`
+const ContenedorAdmin = styled.div`
+	background-color: rgba(200, 150, 255, 0.657);
+    box-shadow: 0.4em 0.4em 10px rgb(136, 66, 248), -0.4em -0.4em 10px rgb(136, 66, 248); 
+    backdrop-filter: blur(5px);
 	margin-top: 2em;
+	margin-bottom: 2em;
 	width: 50%;
-	background: rgb(255,255,255);
 	padding: 2em 0.5em 2em 0.5em;
 	border-radius: 5px;
 	text-align: center;
@@ -27,7 +46,9 @@ const Contenedor = styled.div`
 `;
 
 const Titulo = styled.h2`
-	margin-bottom: 10px;
+	font-size: 4em;
+	color: #fff;
+	margin-bottom: 0.6em;
 `;
  
 export default App;

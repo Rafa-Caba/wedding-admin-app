@@ -73,7 +73,6 @@ const ContenedorInput = styled.div`
     justify-content: space-around;
     margin: 0;
 	width: 100%;
-	background: #fff;
 	padding: 2em;
 	border-radius: 5px;
 	text-align: center;
@@ -86,17 +85,19 @@ const ContenedorInput = styled.div`
 const Input = styled.input`
 	padding: 10px;
     font-size: 1em;
-	border: 2px solid rgba(0,0,0,.2);
+    font-weight: bold;
+	border: 2px solid rgba(152,43,255,.3);
 	border-radius: 3px;
 	width: 100%;
 	margin-bottom: 5px;
+    background: #F3DBFF;
     margin-left: 0.6em;
 	transition: .2s ease all;
 	outline: none;
 	text-align: center;
 	
 	&:focus {
-		border: 2px solid #6a329f;
+		border: 2px solid #982bff;
 	}
 `;
 
@@ -107,12 +108,12 @@ const Boton = styled.button`
 	border-radius: 3px;
 	transition: .3s ease all;
 	outline: none;
-	background: #ba72ff;
 	color: #fff;
 	font-size: 12px;
+	background: #982bff;
 
 	&:hover {
-		background: #982bff;
+		background: #955EFF;
 	}
 `;
  

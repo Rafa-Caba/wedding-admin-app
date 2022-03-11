@@ -132,9 +132,10 @@ const Apellido = styled.p`
 
 const ConfirmStatus = styled.p`
 	font-style: italic;
-    font-size: 0.9em;
-	color: #6B6B6B;
+    font-size: 1em;
+	color: #EAEAEA;
 	margin: 5px 0;
+    text-shadow: 0px 0px 0px black;
 `;
 
 const Boton = styled.button`
@@ -145,12 +146,12 @@ const Boton = styled.button`
 	margin: 7px 2px;
 	transition: .3s ease all;
 	outline: none;
-	background: #a343fd;
 	color: #fff;
 	font-size: 12px;
+	background: #982bff;
 
 	&:hover {
-		background: #ba72ff;
+		background: #955EFF;
 	}
 
     @media (max-width: 600px) {

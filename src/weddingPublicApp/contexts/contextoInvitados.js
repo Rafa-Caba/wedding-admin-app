@@ -16,7 +16,7 @@ const ProverdorInvitados = ({ children }) => {
     useEffect(() => {
         // Obetenemos los datos de Firebase cuando inicia la App
         onSnapshot(
-            collection(db, 'invitados'),
+            collection(db, 'wedding-invitados'),
             (snapshot) => {
                 const arregloInvitados = snapshot.docs.map((doc) => {
                     return { ...doc.data(), id: doc.id }
@@ -44,7 +44,7 @@ const ProverdorInvitados = ({ children }) => {
     // Actualiza los invitados en Firebase
     const actualizandoInvitados =  async (invitado) => {
         try {
-            await updateDoc(doc(db, 'invitados', invitado.id), {
+            await updateDoc(doc(db, 'wedding-invitados', invitado.id), {
                 nombre: invitado.nombre,
                 apellido: invitado.apellido,
                 codigoFamilia: invitado.codigoFamilia,

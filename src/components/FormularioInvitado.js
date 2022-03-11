@@ -13,7 +13,7 @@ const FormularioInvitado = () => {
         e.preventDefault();
 
         try {
-            await addDoc(collection(db, 'invitados'), {
+            await addDoc(collection(db, 'wedding-invitados'), {
                 nombre,
                 apellido,
                 codigoFamilia,

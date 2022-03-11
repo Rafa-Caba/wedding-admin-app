@@ -14,7 +14,7 @@ const Invitado = ({ nombre, apellido, codigoFamilia, confirmStatus, id }) => {
         e.preventDefault();
 
         try {
-            await updateDoc(doc(db, 'invitados', id), {
+            await updateDoc(doc(db, 'wedding-invitados', id), {
                 nombre: nuevoNombre,
                 apellido: nuevoApellido,
                 codigoFamilia: nuevoCodigoFamilia,
@@ -29,7 +29,7 @@ const Invitado = ({ nombre, apellido, codigoFamilia, confirmStatus, id }) => {
 
     const eliminarContacto = async () => {
         try {
-           await deleteDoc(doc(db, 'invitados', id));
+           await deleteDoc(doc(db, 'wedding-invitados', id));
         } catch (err) {
             console.log(err);
         }

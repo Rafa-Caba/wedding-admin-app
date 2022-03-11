@@ -9,7 +9,7 @@ const ListaFamilias = () => {
     
     useEffect(() => {
         onSnapshot(
-            collection(db, 'invitados'),
+            collection(db, 'wedding-invitados'),
             (snapshot) => {
                 const arregloInvitados = snapshot.docs.map((doc) => {
                     return { ...doc.data(), id: doc.id }

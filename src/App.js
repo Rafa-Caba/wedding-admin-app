@@ -12,17 +12,16 @@ const App = () => {
 	<BrowserRouter>
 		<div>
 			<Routes>
+				<Route path="/:codigo" element={<Bienvenida />} />
+				<Route path="/confirmacion/:codigo" element={<Confirmacion />} />
+				<Route path="/despedida/:trigger" element={<Despedida />} />
 				<Route path="/admin" element={
 					<ContenedorAdmin>
 						<Titulo>Wedding Admin</Titulo>
 						<FormularioInvitado />
 						<ListaFamilias />
 					</ContenedorAdmin>
-				}>
-				</Route>
-				<Route path="/:codigo" element={<Bienvenida />} />
-				<Route path="/confirmacion/:codigo" element={<Confirmacion />} />
-				<Route path="/despedida/:trigger" element={<Despedida />} />
+				} />
 			</Routes>
 		</div>
 	</BrowserRouter>

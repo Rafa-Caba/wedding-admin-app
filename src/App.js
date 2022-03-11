@@ -12,7 +12,7 @@ const App = () => {
 	<BrowserRouter>
 		<div>
 			<Routes>
-				<Route path="/:codigo" element={<Bienvenida />} />
+				<Route path="/" element={<Bienvenida />} />
 				<Route path="/confirmacion/:codigo" element={<Confirmacion />} />
 				<Route path="/despedida/:trigger" element={<Despedida />} />
 				<Route path="/admin" element={

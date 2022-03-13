@@ -1,7 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Contenedor from '../elements/Contenedor'
-import { NavLink, useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import { ContextoInvitados } from '../contexts/contextoInvitados';
 import Header from './Header'
 import MainContenedor from './../elements/MainContenedor'
@@ -9,8 +9,11 @@ import MainContenedor from './../elements/MainContenedor'
 const Bienvenida = () => {
     // Funcion que filtrara los invitados por codigo recibido en useParams
     const { filtrarFamilia } = useContext(ContextoInvitados);
+    const [iniciar, cambiarIniciar] = useState(false);
     // Obtenemos el codigo por el parametro en el URL
     const { codigo } = useParams();
+
+    useEffect(() => {}, [iniciar])
 
     return (
         <MainContenedor>
@@ -20,19 +23,22 @@ const Bienvenida = () => {
                     Bienvenido a nuestro Registro de Invitados
                 </Titulo>
                 <ContenedorBtn>
+                    { iniciar && <Navigate replace to={`/confirmacion/${codigo}`} /> }
                     { codigo && !isNaN(codigo) ?
-                        <Boton onClick={() => (
+                        <Boton onClick={() => {
                         // Corremos esta funcion al dar click en el boton 
                         // para filtrar los invitados por codigo y actualizar el estado
                         filtrarFamilia(codigo)
-                    )}>
-                        <NavLink to={`/confirmacion/${codigo}`}>Iniciar registro</NavLink>
+                        cambiarIniciar(!iniciar);
+                    }}
+                    >
+                        Iniciar registro
                     </Boton>
                     :
                     <Boton disabled={true}>
                         Iniciar registro
                     </Boton>
-                }
+                    }
                 </ContenedorBtn>
             </Contenedor>
         </MainContenedor>

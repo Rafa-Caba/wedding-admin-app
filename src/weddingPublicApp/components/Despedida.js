@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Header from './Header';
 import MainContenedor from '../elements/MainContenedor';
 import { Navigate, useParams } from 'react-router-dom';
@@ -8,47 +8,57 @@ import { ContextoInvitados } from '../contexts/contextoInvitados';
 const Despedida = () => {
     const { invitadoInfo } = useContext(ContextoInvitados);
     const [finalizar, cambiarFinalizar] = useState(false);
-    const { trigger } = useParams();
+    const { codigo, trigger } = useParams();
 
-    setTimeout(() => {
-        cambiarFinalizar(!finalizar);
-    }, 3000);
+    useEffect(() => {}, [finalizar])
 
     return (
-        <MainContenedor>
-            <Header />
-            <ContenedorDespedida>
-                {parseInt(trigger) > 0 ?
-                    <>
-                        <DespedidaMsg>
-                            ¡Muchas gracias Familia:
-                        </DespedidaMsg>
-                        <DespedidaTitulo>
-                            '{invitadoInfo.apellido}'
-                        </DespedidaTitulo>
-                        <DespedidaMsg>
-                            Por confirmar tu asistencia a nuestra Boda!
-                        </DespedidaMsg>
-                        <DespedidaMsg>
-                            ¡Te esperamos el dia 10 de Septiembre!
-                        </DespedidaMsg>
-                        { finalizar && 
-                            <Navigate to={`/${invitadoInfo.codigoFamilia}`} />
+        <>
+            { invitadoInfo.apellido && invitadoInfo.codigoFamilia ? 
+                <MainContenedor>
+                    <Header />
+                    <ContenedorDespedida>
+                        {parseInt(trigger) > 0 ?
+                            <>
+                                <DespedidaMsg>
+                                    ¡Muchas gracias Familia:
+                                </DespedidaMsg>
+                                <DespedidaTitulo>
+                                    '{invitadoInfo.apellido}'
+                                </DespedidaTitulo>
+                                <DespedidaMsg>
+                                    Por confirmar tu asistencia a nuestra Boda!
+                                </DespedidaMsg>
+                                <DespedidaMsg>
+                                    ¡Te esperamos el dia 10 de Septiembre!
+                                </DespedidaMsg>
+                                <Boton onClick={() => cambiarFinalizar(!finalizar)}>
+                                    Finalizar
+                                </Boton>
+                                { finalizar && 
+                                    <Navigate replace to={`/${invitadoInfo.codigoFamilia}`} />
+                                }
+                            </>
+                        :
+                            <>
+                                <DespedidaTitulo>
+                                    ¡Lamentamos mucho
+                                    que no puedan <br /> acompañarnos a nuestra Boda! :(
+                                </DespedidaTitulo>
+                                <Boton onClick={() => cambiarFinalizar(!finalizar)}>
+                                    Finalizar
+                                </Boton>
+                                { finalizar && 
+                                    <Navigate replace to={`/${invitadoInfo.codigoFamilia}`} />
+                                }
+                            </>
                         }
-                    </>
+                    </ContenedorDespedida>
+                </MainContenedor>
                 :
-                    <>
-                        <DespedidaTitulo>
-                            ¡Lamentamos mucho
-                            que no puedan <br /> acompañarnos a nuestra Boda! :(
-                        </DespedidaTitulo>
-                        { finalizar && 
-                            <Navigate to={`/${invitadoInfo.codigoFamilia}`} />
-                        }
-                    </>
-                }
-            </ContenedorDespedida>
-        </MainContenedor>
+                <Navigate replace to={`/${codigo}`} />
+            }
+        </>
     );
 }
 
@@ -77,6 +87,24 @@ const DespedidaMsg = styled.p`
     text-align: center;
     font-size: 1em;
     margin-top: 0.4em;
+`;
+
+const Boton = styled.button`
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    background: rgb(197, 127, 250);
+	font-size: 0.8em;
+    border-radius: 10px;
+    border: rgb(212, 158, 253);
+    padding: 0.5em 1.5em;
+    margin: 1em auto;
+    cursor: pointer;
+
+    &:hover {
+        background: rgb(186, 106, 248);
+        cursor: pointer;
+    }
 `;
  
 export default Despedida;

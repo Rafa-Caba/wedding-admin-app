@@ -5,8 +5,10 @@ import MainContenedor from '../elements/MainContenedor';
 import Contenedor from '../elements/Contenedor'
 import { ContextoInvitados } from '../contexts/contextoInvitados';
 import ConfirmacionDecision from './ConfirmacionDecision';
+import { useParams, Navigate } from 'react-router-dom';
 
 const Confirmacion = () => {
+    const { codigo } = useParams()
     // Recibimos invitadoInfo del Contexto y tomamos el Apellido 
     const { invitadoInfo } = useContext(ContextoInvitados);
     // Estado para activar componente ´ConfirmacionOpciones´
@@ -25,57 +27,63 @@ const Confirmacion = () => {
     }
 
     return (
-        <MainContenedor>
-            <Header />
-            <Contenedor>
-                <MsgFamilia>
-                    Bienvenida Familia {apellido}
-                </MsgFamilia>
-                <MsgIndOFam>
-                    Por favor confirma: Toda la familia o Individualmente
-                </MsgIndOFam>
+        <> {
+            !apellido ? <Navigate replace to={`/${codigo}`} />
+            :
+            <MainContenedor>
+                <Header />
+                <Contenedor>
+                    <MsgFamilia>
+                        Bienvenida Familia {apellido}
+                    </MsgFamilia>
+                    <MsgIndOFam>
+                        Por favor confirma: Toda la familia o Individualmente
+                    </MsgIndOFam>
 
-                <ConfirmacionOpciones>   
-                    <FormularioOpciones onSubmit={opcionSeleccionada}>
-                        <RadioInput 
-                            type="radio" 
-                            name="option" 
-                            id="familia_completa" 
-                            value="Familia completa"
-                            onChange={(e) => cambiarOpcionElegida(e.target.value)}
-                        />
-                        <RadioLabel htmlFor="familia_completa">
-                            Familia completa
-                        </RadioLabel>
-
-                        <RadioInput 
-                            type="radio" 
-                            name="option" 
-                            id="individual" 
-                            value="Individualmente" 
-                            onChange={(e) => cambiarOpcionElegida(e.target.value)}
-                        />
-                        <RadioLabel htmlFor="individual">
-                            Individualmente
-                        </RadioLabel>
-
-                        {!confirmando &&
-                            <SubmitInput 
-                                type="submit" 
-                                value="Continuar" 
-                                disabled={!opcionElegida ? true : false}
+                    <ConfirmacionOpciones>   
+                        <FormularioOpciones onSubmit={opcionSeleccionada}>
+                            <RadioInput 
+                                type="radio" 
+                                name="option" 
+                                id="familia_completa" 
+                                value="Familia completa"
+                                onChange={(e) => cambiarOpcionElegida(e.target.value)}
                             />
-                        }
-                    </FormularioOpciones>
-                </ConfirmacionOpciones>
+                            <RadioLabel htmlFor="familia_completa">
+                                Familia completa
+                            </RadioLabel>
 
-                {confirmando && 
-                    <ConfirmacionDecision 
-                        opcionElegida={opcionElegida} 
-                    />
-                }
-            </Contenedor>
-        </MainContenedor>
+                            <RadioInput 
+                                type="radio" 
+                                name="option" 
+                                id="individual" 
+                                value="Individualmente" 
+                                onChange={(e) => cambiarOpcionElegida(e.target.value)}
+                            />
+                            <RadioLabel htmlFor="individual">
+                                Individualmente
+                            </RadioLabel>
+
+                            {!confirmando &&
+                                <SubmitInput 
+                                    type="submit" 
+                                    value="Continuar" 
+                                    disabled={!opcionElegida ? true : false}
+                                />
+                            }
+                        </FormularioOpciones>
+                    </ConfirmacionOpciones>
+
+                    {confirmando && 
+                        <ConfirmacionDecision 
+                            codigo={codigo}
+                            opcionElegida={opcionElegida} 
+                        />
+                    }
+                </Contenedor>
+            </MainContenedor>
+        }
+        </>
     );
 }
 

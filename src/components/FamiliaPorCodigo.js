@@ -50,7 +50,7 @@ const Boton = styled.button`
 	transition: .3s ease all;
 	outline: none;
 	color: #fff;
-	font-size: 12px;
+	font-size: 1em;
     border-bottom: 2px solid rgba(0,0,0,.2);
 	background: #982bff;
 
@@ -59,7 +59,7 @@ const Boton = styled.button`
 	}
 
     @media (max-width: 600px) {
-        font-size: 12px;
+        font-size: 1.1em;
         width: 90%;
 	}
 `;

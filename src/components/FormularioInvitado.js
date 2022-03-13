@@ -54,13 +54,21 @@ const FormularioInvitado = () => {
                     onChange={(e) => cambiarCogidoFamilia(e.target.value)}
                     placeholder="Codigo de Familia"
                 />
-                <Input 
-                    type="text"
-                    name="confirmStatus"
-                    value={confirmStatus}
+                <SeleccionConfirmacion 
                     onChange={(e) => cambiarConfirmStatus(e.target.value)}
-                    placeholder="Estado de Confirmacion"
-                />
+                    name="Confirmación">
+                    <OpcionConfirmacion> - Confirmación -</OpcionConfirmacion>
+                    <OpcionConfirmacion
+                        value="No Confirmado"
+                    >
+                        No Confirmado
+                    </OpcionConfirmacion>
+                    <OpcionConfirmacion
+                        value="Confimado"
+                    >
+                        Confirmado
+                    </OpcionConfirmacion>
+                </SeleccionConfirmacion>
             </ContenedorInput>
 
             <Boton type="submit">Agregar Invitado</Boton>
@@ -71,15 +79,46 @@ const FormularioInvitado = () => {
 const ContenedorInput = styled.div`
     display: flex;
     justify-content: space-around;
-    margin: 0;
+    margin: auto;
 	width: 100%;
 	padding: 2em;
 	border-radius: 5px;
 	text-align: center;
     @media (max-width: 600px) {
-		font-size: 11px;
+		font-size: 2em;
         flex-direction: column;
 	}
+`;
+
+const SeleccionConfirmacion = styled.select`
+    padding: 10px;
+    font-size: 1.3em;
+	border: 2px solid rgba(152,43,255,.3);
+	border-radius: 3px;
+	width: 100%;
+	margin-bottom: 5px;
+    background: #BD78FE;
+    margin-left: 0.6em;
+	transition: .2s ease all;
+	outline: none;
+	text-align: center;
+    color: #fff;
+`;
+
+const OpcionConfirmacion = styled.option`
+    padding: 1em;
+    font-size: 1em;
+    font-weight: bold;
+	border: 2px solid rgba(152,43,255,.3);
+	border-radius: 3px;
+	width: 100%;
+	margin: 5px 0;
+    background: rgba(152,43,255,.8);
+    margin-left: 0.6em;
+	transition: .2s ease all;
+	outline: none;
+	text-align: center;
+    color: #fff;
 `;
 
 const Input = styled.input`

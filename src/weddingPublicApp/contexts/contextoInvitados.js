@@ -31,7 +31,7 @@ const ProverdorInvitados = ({ children }) => {
     }, []);
     
     // Filtramos a la familia por su codigo
-    const filtrarFamilia = (codigoFamilia) => {
+    const filtrarFamilia = async (codigoFamilia) => {
         const nuevoArregloFailiaFiltrada = invitados.filter((invitado) => invitado.codigoFamilia === codigoFamilia);
         cambiarFamiliaFiltradaPorCodigo(nuevoArregloFailiaFiltrada);
         // Se agrega el apellido y codigo a InvitadoInfo

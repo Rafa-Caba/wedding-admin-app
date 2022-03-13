@@ -62,13 +62,20 @@ const Invitado = ({ nombre, apellido, codigoFamilia, confirmStatus, id }) => {
                                 onChange={(e) => cambiarNuevoCodigoFamilia(e.target.value)}
                                 placeholder="Codigo de Familia"
                             />
-                            <Input 
-                                type="text"
-                                name="confirmStatus"
-                                value={nuevoConfirmStatus}
+                            <SeleccionConfirmacion 
                                 onChange={(e) => cambiarNuevoConfirmStatus(e.target.value)}
-                                placeholder="Estado de Confirmacion"
-                            />
+                                name="Confirmación">
+                                <OpcionConfirmacion
+                                    value={nuevoConfirmStatus}
+                                >
+                                    {nuevoConfirmStatus}
+                                </OpcionConfirmacion>
+                                <OpcionConfirmacion
+                                    value={nuevoConfirmStatus === "Confirmado" ? "No Confirmado" : "Confirmado"}
+                                >
+                                    {nuevoConfirmStatus === "Confirmado" ? "No Confirmado" : "Confirmado"}
+                                </OpcionConfirmacion>
+                            </SeleccionConfirmacion>
                         </ContenedorInput>
                         <Boton type="submit">Actualizar</Boton>
                     </form>
@@ -95,7 +102,7 @@ const Invitado = ({ nombre, apellido, codigoFamilia, confirmStatus, id }) => {
  
 
 const ContenedorInvitado = styled.div`
-	padding: 1em 2em;
+	padding: 1em 1em;
     width: 100%;
 	border-bottom: 2px solid rgba(163,67,253,.3);
     @media (max-width: 600px) {
@@ -103,14 +110,53 @@ const ContenedorInvitado = styled.div`
 	}
 `;
 
+const SeleccionConfirmacion = styled.select`
+    padding: 10px;
+    font-size: 1.3em;
+	border: 2px solid rgba(152,43,255,.3);
+	border-radius: 3px;
+	width: 60%;
+	margin-bottom: 5px;
+    background: #BD78FE;
+	transition: .2s ease all;
+	outline: none;
+	text-align: center;
+    color: #fff;
+
+    @media (max-width: 600px) {
+        width: 100%;
+		flex-direction: row;
+	}
+`;
+
+const OpcionConfirmacion = styled.option`
+    font-size: 1em;
+    font-weight: bold;
+	border: 2px solid rgba(152,43,255,.3);
+	border-radius: 3px;
+	width: 60%;
+	margin: 5px 0;
+    background: rgba(152,43,255,.8);
+	transition: .2s ease all;
+	outline: none;
+	text-align: center;
+    color: #fff;
+
+    @media (max-width: 600px) {
+        width: 100%;
+		flex-direction: row;
+	}
+`;
+
 const ContenedorNombre = styled.div`
     display: flex;
+    font-size: 2em;
     justify-content: center;
     align-items: center;
     margin-top: 0.6em;
     gap: 0.3em;
     @media (max-width: 600px) {
-        font-size: 18px;
+        font-size: 2em;
 		flex-direction: column;
 	}
 `;
@@ -122,7 +168,7 @@ const Nombre = styled.p`
 
 const Familia = styled.p`
 	font-weight: bold;
-    font-size: 0.9em;
+    font-size: 1.2em;
     margin: 0.5em
 `;
 
@@ -132,10 +178,9 @@ const Apellido = styled.p`
 
 const ConfirmStatus = styled.p`
 	font-style: italic;
-    font-size: 1em;
+    font-size: 0.8em;
 	color: #EAEAEA;
 	margin: 5px 0;
-    text-shadow: 0px 0px 0px black;
 `;
 
 const Boton = styled.button`
@@ -161,20 +206,22 @@ const Boton = styled.button`
 
 const Input = styled.input`
 	padding: 10px;
-	border: 2px solid rgba(0,0,0,.2);
+	border: 2px solid rgba(152,43,255,.3);
 	border-radius: 3px;
-	width: 100%;
+	width: 60%;
 	margin-bottom: 10px;
 	transition: .2s ease all;
 	outline: none;
+    background: #F3DBFF;
 	text-align: center;
 	
 	&:focus {
-		border: 2px solid #3D76E9;
+		border: 2px solid #982bff;
 	}
 
     @media (max-width: 600px) {
         font-size: 14px;
+        width: 100%;
 		flex-direction: row;
 	}
 `;
@@ -185,6 +232,8 @@ const ContenedorInput = styled.div`
     align-items: center;
     flex-direction: column;
     padding: 1em;
+    width: 50%
+    margin: auto;
 `;
 
 const ContenedorBotones = styled.div`

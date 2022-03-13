@@ -1,12 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import { ContextoInvitados } from '../contexts/contextoInvitados';
 
-const ConfirmacionDecision = ({ opcionElegida }) => {
+const ConfirmacionDecision = ({ codigo, opcionElegida }) => {
     const { familiaFiltradaPorCodigo, confimarAssistenciaIndividual, confirmarFamilia } = useContext(ContextoInvitados);
     const [confimacionIdInvitadoAConfirmar, cambiarConfirmacionIdInvitadoAConfirmar] = useState({});
     const [trigger, cambiarTrigger] = useState(0);
+    const [irADespedida, cambiarIrADespedida] = useState(false);
 
    const settingTrigger = (confirmacion) => {
         if (confirmacion) {
@@ -34,6 +35,7 @@ const ConfirmacionDecision = ({ opcionElegida }) => {
     
     return (
         <ContenedorConfirmacionDesicion>
+            { irADespedida && <Navigate replace to={`/despedida/${codigo}/${opcionElegida === "Familia completa" ? 1 : trigger}`} /> }
             <FormDecision action="">
                 { opcionElegida === "Familia completa" &&
                     <ContenedorConfirmacionFamiliar>
@@ -50,7 +52,7 @@ const ConfirmacionDecision = ({ opcionElegida }) => {
                             familiaFiltradaPorCodigo.map(({ id, nombre, confirmStatus }) => {
                                 return (
                                     <MiembrosDiv key={id}>
-                                        {confirmStatus === "Confirmado" ? 
+                                        {confirmStatus === "Confirmado" ?
                                             <IndividualCheckbox 
                                                 type="checkbox"
                                                 id={id}
@@ -78,7 +80,7 @@ const ConfirmacionDecision = ({ opcionElegida }) => {
                                             />
                                         }
                                         <IndividualLabel htmlFor={id}>
-                                            {nombre}  -  <i>{confirmStatus}</i>
+                                            <strong>{nombre}</strong>  -  <i>{confirmStatus}</i>
                                         </IndividualLabel>
                                     </MiembrosDiv>
                                 );
@@ -89,9 +91,12 @@ const ConfirmacionDecision = ({ opcionElegida }) => {
 
                 <ConfDesicionBtn 
                     type="submit" 
-                    onClick={(e) => actualizarFamilia(e)}
+                    onClick={(e) => {
+                        actualizarFamilia(e);
+                        cambiarIrADespedida(!irADespedida);
+                    }}
                 >
-                    <NavLink to={`/despedida/${opcionElegida === "Familia completa" ? 1 : trigger}`}>Confirmar</NavLink>
+                    Confirmar
                 </ConfDesicionBtn>
             </FormDecision>
         </ContenedorConfirmacionDesicion>
@@ -184,16 +189,19 @@ const IndividualCheckbox = styled.input`
     margin: auto;
     height: 1.5em;
     width: 1.5em;
+    margin-top: 0.3em;
+
 `;
 
 const IndividualLabel = styled.label`
-    font-size: 1em;
+    font-size: 1.3em;
     cursor: pointer;
     margin-left: 0.5em;
     text-align: left;
+    margin-top: 0.3em;
 
     @media (max-width: 900px) {
-        font-size: 0.9em;
+        font-size: 1.1em;
 	}
 `;
  

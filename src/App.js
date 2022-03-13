@@ -12,9 +12,9 @@ const App = () => {
 	<BrowserRouter>
 		<div>
 			<Routes>
-				<Route path="/" element={<Bienvenida />} />
+				<Route path="/:codigo" element={<Bienvenida />} />
 				<Route path="/confirmacion/:codigo" element={<Confirmacion />} />
-				<Route path="/despedida/:trigger" element={<Despedida />} />
+				<Route path="/despedida/:codigo/:trigger" element={<Despedida />} />
 				<Route path="/admin" element={
 					<ContenedorAdmin>
 						<Titulo>Wedding Admin</Titulo>
@@ -29,25 +29,24 @@ const App = () => {
 }
  
 const ContenedorAdmin = styled.div`
-	background-color: rgba(200, 150, 255, 0.657);
+	background-color: rgba(200, 170, 255, 0.657);
     box-shadow: 0.4em 0.4em 10px rgb(136, 66, 248), -0.4em -0.4em 10px rgb(136, 66, 248); 
     backdrop-filter: blur(5px);
 	margin-top: 2em;
 	margin-bottom: 2em;
-	width: 50%;
+	width: 100%;
+	margin: 2em 0;
 	padding: 2em 0.5em 2em 0.5em;
 	border-radius: 5px;
 	text-align: center;
-
-	@media (max-width: 900px) {
-		width: 90%;
-	}
 `;
 
 const Titulo = styled.h2`
+	padding: 0 2.2em;
 	font-size: 4em;
 	color: #fff;
 	margin-bottom: 0.6em;
+	margin-top: 0.3em;
 `;
  
 export default App;

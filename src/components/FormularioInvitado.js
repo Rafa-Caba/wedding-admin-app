@@ -56,16 +56,12 @@ const FormularioInvitado = () => {
                 />
                 <SeleccionConfirmacion 
                     onChange={(e) => cambiarConfirmStatus(e.target.value)}
-                    name="Confirmación">
-                    <OpcionConfirmacion> - Confirmación -</OpcionConfirmacion>
-                    <OpcionConfirmacion
-                        value="No Confirmado"
-                    >
+                    name="Confirmación"
+                >
+                    <OpcionConfirmacion value="No Confirmado" >
                         No Confirmado
                     </OpcionConfirmacion>
-                    <OpcionConfirmacion
-                        value="Confimado"
-                    >
+                    <OpcionConfirmacion value="Confimado" >
                         Confirmado
                     </OpcionConfirmacion>
                 </SeleccionConfirmacion>

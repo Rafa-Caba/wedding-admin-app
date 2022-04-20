@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Contenedor from '../elements/Contenedor'
+import Contenedor from './../elements/Contenedor';
 import { Navigate, useParams } from 'react-router-dom';
-import { ContextoInvitados } from '../contexts/contextoInvitados';
-import Header from './Header'
-import MainContenedor from './../elements/MainContenedor'
+import { ContextoInvitados } from './../contexts/contextoInvitados';
+import Header from './Header';
+import MainContenedor from './../elements/MainContenedor';
+import Invitacion from './Invitacion';
 
 const Bienvenida = () => {
     // Funcion que filtrara los invitados por codigo recibido en useParams
@@ -20,7 +21,7 @@ const Bienvenida = () => {
             <Header />
             <Contenedor>
                 <Titulo>
-                    Bienvenido a nuestro Registro de Invitados
+                    ¡Bienvenido a nuestro Registro de Invitados!
                 </Titulo>
                 <ContenedorBtn>
                     { iniciar && <Navigate replace to={`/confirmacion/${codigo}`} /> }
@@ -41,6 +42,7 @@ const Bienvenida = () => {
                     }
                 </ContenedorBtn>
             </Contenedor>
+            <Invitacion />
         </MainContenedor>
     );
 }
@@ -49,9 +51,13 @@ const Titulo = styled.p`
     color: #fff;
     margin: auto;
     padding: 1em 0.5em;
-    font-size: 2em;
+    font-size: 3rem;
     width: 90%;
     text-align: center;
+
+    @media (max-width: 500px) {
+    font-size: 1.3rem;
+	}
 `;
 
 const ContenedorBtn = styled.div`

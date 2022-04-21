@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import db from '../firebase/firebaseConfig';
 import { collection, addDoc } from 'firebase/firestore';
@@ -7,10 +7,14 @@ const FormularioInvitado = () => {
     const [nombre, cambiarNombre] = useState('');
     const [apellido, cambiarApellido] = useState('');
     const [codigoFamilia, cambiarCogidoFamilia] = useState('');
-    const [confirmStatus, cambiarConfirmStatus] = useState('');
+    const [confirmStatus, cambiarConfirmStatus] = useState('No Confirmado');
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        if (!nombre || !apellido || !codigoFamilia) {
+            return;
+        }
 
         try {
             await addDoc(collection(db, 'wedding-invitados'), {
@@ -27,8 +31,12 @@ const FormularioInvitado = () => {
         cambiarNombre('');
         cambiarApellido('');
         cambiarCogidoFamilia('');
-        cambiarConfirmStatus('');
+        cambiarConfirmStatus('No Confirmado');
     }
+
+    useEffect(() => {
+        cambiarConfirmStatus("No Confirmado");
+    }, [])
 
     return (
         <form onSubmit={onSubmit}>

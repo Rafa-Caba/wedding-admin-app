@@ -10,14 +10,14 @@ import { useParams, Navigate } from 'react-router-dom';
 const Confirmacion = () => {
     const { codigo } = useParams()
     // Recibimos invitadoInfo del Contexto y tomamos el Apellido 
-    const { invitadoInfo } = useContext(ContextoInvitados);
+    const { familiaFiltradaPorCodigo, invitadoInfo } = useContext(ContextoInvitados);
     // Estado para activar componente ´ConfirmacionOpciones´
     const [confirmando, cambiarConfirmando] = useState(false);
     // Estado de la opcion elegida, yas sea 'Familia Completa' o 'Individualmente'
     const [opcionElegida, cambiarOpcionElegida] = useState('');
-
     // Agregamos a apellido el valor apellido de InvitadoInfo
     const apellido = invitadoInfo.apellido;
+    const nombre = invitadoInfo.nombre;
 
     // Al enviar el Formulario, se activa la opcion de 
     // confirmacion y se cambia su estado a verdadero 'TRUE'
@@ -33,51 +33,101 @@ const Confirmacion = () => {
             <MainContenedor>
                 <Header />
                 <Contenedor>
-                    <MsgFamilia>
-                        Bienvenida Familia {apellido}
-                    </MsgFamilia>
-                    <MsgIndOFam>
-                        Por favor confirma: Toda la familia o Individualmente
-                    </MsgIndOFam>
+                    { familiaFiltradaPorCodigo.length <= 1 ?
+                        <>
+                            <MsgSingle>
+                                Bienvenido {`${nombre} ${apellido}`}
+                            </MsgSingle>
+                            <MsgIndOFam>
+                                Por favor confirma tu Asistencia:
+                            </MsgIndOFam>
 
-                    <ConfirmacionOpciones>   
-                        <FormularioOpciones onSubmit={opcionSeleccionada}>
-                            <RadioInput 
-                                type="radio" 
-                                name="option" 
-                                id="familia_completa" 
-                                value="Familia completa"
-                                onChange={(e) => cambiarOpcionElegida(e.target.value)}
-                            />
-                            <RadioLabel htmlFor="familia_completa">
-                                Familia completa
-                            </RadioLabel>
+                            <ConfirmacionOpciones>                           
+                                <FormularioOpciones onSubmit={opcionSeleccionada}>
+                                    <RadioInput 
+                                        type="radio" 
+                                        name="option" 
+                                        id="single" 
+                                        value="Single"
+                                        onChange={(e) => cambiarOpcionElegida(e.target.value)}
+                                    />
+                                    <RadioLabel htmlFor="single">
+                                        Confirmar Asistencia
+                                    </RadioLabel>
 
-                            <RadioInput 
-                                type="radio" 
-                                name="option" 
-                                id="individual" 
-                                value="Individualmente" 
-                                onChange={(e) => cambiarOpcionElegida(e.target.value)}
-                            />
-                            <RadioLabel htmlFor="individual">
-                                Individualmente
-                            </RadioLabel>
+                                    <RadioInput 
+                                        type="radio" 
+                                        name="option" 
+                                        id="rechazado" 
+                                        value="rechazado" 
+                                        onChange={(e) => cambiarOpcionElegida(e.target.value)}
+                                    />
+                                    <RadioLabel htmlFor="rechazado">
+                                        No Asistiré
+                                    </RadioLabel>
 
-                            {!confirmando &&
-                                <SubmitInput 
-                                    type="submit" 
-                                    value="Continuar" 
-                                    disabled={!opcionElegida ? true : false}
-                                />
-                            }
-                        </FormularioOpciones>
-                    </ConfirmacionOpciones>
+                                    {!confirmando &&
+                                        <SubmitInput 
+                                            type="submit" 
+                                            value="Continuar" 
+                                            disabled={!opcionElegida ? true : false}
+                                        />
+                                    }
+                                </FormularioOpciones>
+                            </ConfirmacionOpciones>
+                        </>
+                        :
+                        <>
+                            <MsgIndOFam>
+                                Bienvenida Familia
+                            </MsgIndOFam>
+                            <MsgFamilia>
+                                {apellido}
+                            </MsgFamilia>
+                            <MsgIndOFam>
+                                Por favor confirma a tu <i>"Familia Completa"</i> si asistiran todos o si algunos integrantes de tu Familia
+                                no podran asistir, confirma <i>"Individualmente"</i>:
+                            </MsgIndOFam>
 
+                            <ConfirmacionOpciones>                           
+                                <FormularioOpciones onSubmit={opcionSeleccionada}>
+                                    <RadioInput 
+                                        type="radio" 
+                                        name="option" 
+                                        id="familia_completa" 
+                                        value="Familia completa"
+                                        onChange={(e) => cambiarOpcionElegida(e.target.value)}
+                                    />
+                                    <RadioLabel htmlFor="familia_completa">
+                                        <strong>Familia Completa</strong>
+                                    </RadioLabel>
+
+                                    <RadioInput 
+                                        type="radio" 
+                                        name="option" 
+                                        id="individual" 
+                                        value="Individualmente" 
+                                        onChange={(e) => cambiarOpcionElegida(e.target.value)}
+                                    />
+                                    <RadioLabel htmlFor="individual">
+                                        <strong>Individualmente</strong>
+                                    </RadioLabel>
+
+                                    {!confirmando &&
+                                        <SubmitInput 
+                                            type="submit" 
+                                            value="Continuar" 
+                                            disabled={!opcionElegida ? true : false}
+                                        />
+                                    }
+                                </FormularioOpciones>
+                            </ConfirmacionOpciones>
+                        </>
+                    }
                     {confirmando && 
                         <ConfirmacionDecision 
                             codigo={codigo}
-                            opcionElegida={opcionElegida} 
+                            opcionElegida={opcionElegida}
                         />
                     }
                 </Contenedor>
@@ -87,10 +137,21 @@ const Confirmacion = () => {
     );
 }
 
-const MsgFamilia = styled.p`
-    font-size: 2.6em;
+const MsgSingle = styled.p`
+    font-size: 3em;
     text-align: center;
-    padding: 0.5em 0.2em 1em 0.2em;
+    padding: 0 0 1em 0;
+    margin: 1em 0 0 0;
+
+    @media (max-width: 900px) {
+        font-size: 2.2em;
+    }
+`;
+
+const MsgFamilia = styled.p`
+    font-size: 3em;
+    text-align: center;
+    padding: 0 0 1em 0;
     margin: 0;
 
     @media (max-width: 900px) {
@@ -147,7 +208,7 @@ const SubmitInput = styled.input`
     font-size: 1.2em;
     margin-top: 0.8em;
     width: 50%;
-    padding: 10px 5px;
+    padding: 0.7em 0.7em;
     background: rgb(197, 127, 250);
     border-radius: 10px;
     border: rgb(212, 158, 253);

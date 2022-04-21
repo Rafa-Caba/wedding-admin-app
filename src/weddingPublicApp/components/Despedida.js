@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ContextoInvitados } from '../contexts/contextoInvitados';
 
 const Despedida = () => {
-    const { invitadoInfo } = useContext(ContextoInvitados);
+    const { familiaFiltradaPorCodigo, invitadoInfo } = useContext(ContextoInvitados);
     const [finalizar, cambiarFinalizar] = useState(false);
     const { codigo, trigger } = useParams();
 
@@ -18,14 +18,21 @@ const Despedida = () => {
                 <MainContenedor>
                     <Header />
                     <ContenedorDespedida>
-                        {parseInt(trigger) > 0 ?
+                        {
+                            parseInt(trigger) > 0 ?
                             <>
                                 <DespedidaMsg>
-                                    ¡Muchas gracias Familia:
+                                    ¡Muchas gracias:
                                 </DespedidaMsg>
-                                <DespedidaTitulo>
-                                    '{invitadoInfo.apellido}'
-                                </DespedidaTitulo>
+                                { familiaFiltradaPorCodigo.length <= 1 ?
+                                        <DespedidaTitulo>
+                                        '{`${invitadoInfo.nombre} ${invitadoInfo.apellido}`}'
+                                        </DespedidaTitulo>
+                                    :
+                                        <DespedidaTitulo>
+                                            'Familia {invitadoInfo.apellido}'
+                                        </DespedidaTitulo>
+                                }
                                 <DespedidaMsg>
                                     Por confirmar tu asistencia a nuestra Boda!
                                 </DespedidaMsg>
@@ -43,7 +50,7 @@ const Despedida = () => {
                             <>
                                 <DespedidaTitulo>
                                     ¡Lamentamos mucho
-                                    que no puedan <br /> acompañarnos a nuestra Boda! :(
+                                    que no puedan acompañarnos a nuestra Boda! :(
                                 </DespedidaTitulo>
                                 <Boton onClick={() => cambiarFinalizar(!finalizar)}>
                                     Finalizar

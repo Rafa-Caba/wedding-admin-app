@@ -36,6 +36,7 @@ const ProverdorInvitados = ({ children }) => {
         cambiarFamiliaFiltradaPorCodigo(nuevoArregloFailiaFiltrada);
         // Se agrega el apellido y codigo a InvitadoInfo
         cambiarInvitadoInfo({ 
+            nombre: nuevoArregloFailiaFiltrada[0].nombre,
             apellido: nuevoArregloFailiaFiltrada[0].apellido, 
             codigoFamilia: nuevoArregloFailiaFiltrada[0].codigoFamilia 
         });
@@ -82,7 +83,7 @@ const ProverdorInvitados = ({ children }) => {
 
     // Confirmara a toda la familia completa
     const confirmarFamilia = (confirmacionStatus) => {
-        const confirmStatus = confirmacionStatus && "Confirmado";
+        const confirmStatus = confirmacionStatus ? "Confirmado" : "No Confirmado";
 
         familiaFiltradaPorCodigo.forEach((invitado) => {
             const nuevoInvitado = { ...invitado, confirmStatus };

@@ -9,7 +9,9 @@ const ConfirmacionDecision = ({ codigo, opcionElegida }) => {
     const [trigger, cambiarTrigger] = useState(0);
     const [irADespedida, cambiarIrADespedida] = useState(false);
 
-   const settingTrigger = (confirmacion) => {
+    
+
+    const settingTrigger = (confirmacion) => {
         if (confirmacion) {
             cambiarTrigger(trigger + 1);
         } else if (!confirmacion && trigger > 0) {
@@ -22,10 +24,22 @@ const ConfirmacionDecision = ({ codigo, opcionElegida }) => {
     const actualizarFamilia = (e) => {
         e.preventDefault();
 
-        if (opcionElegida === "Familia completa") {
+        if (opcionElegida === "Familia completa" || opcionElegida === "Single") {
             confirmarFamilia(true);
-        }        
+        } else if (opcionElegida === "rechazado") {
+            confirmarFamilia(false);
+        }     
     }
+
+    useEffect(() => {
+        familiaFiltradaPorCodigo.forEach((invitado) => {
+            if (invitado.confirmStatus === "Confirmado") {
+                cambiarTrigger(1);
+                return;
+            }
+        })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     useEffect(() => {
         confimarAssistenciaIndividual(confimacionIdInvitadoAConfirmar.id, confimacionIdInvitadoAConfirmar.confirmacion);
@@ -34,72 +48,108 @@ const ConfirmacionDecision = ({ codigo, opcionElegida }) => {
     }, [confimacionIdInvitadoAConfirmar]);
     
     return (
-        <ContenedorConfirmacionDesicion>
-            { irADespedida && <Navigate replace to={`/despedida/${codigo}/${opcionElegida === "Familia completa" ? 1 : trigger}`} /> }
+        <>
+            { irADespedida && <Navigate replace to={`/despedida/${codigo}/${opcionElegida === "Familia completa" || opcionElegida === "Single" ? 1 : trigger}`} /> }
             <FormDecision action="">
-                { opcionElegida === "Familia completa" &&
-                    <ContenedorConfirmacionFamiliar>
-                        Confirma tu Familia 
-                    </ContenedorConfirmacionFamiliar>}
-                
-                { opcionElegida === "Individualmente" &&
-                    <ContenedorConfirmacionIndividual>
-                    <MiembrosFamiliaTitulo>
-                        Por favor selecciona a quienes seran parte de nuestra Boda
-                    </MiembrosFamiliaTitulo>
-                    <ContenedorMiembrosFamilia>
-                        {
-                            familiaFiltradaPorCodigo.map(({ id, nombre, confirmStatus }) => {
-                                return (
-                                    <MiembrosDiv key={id}>
-                                        {confirmStatus === "Confirmado" ?
-                                            <IndividualCheckbox 
-                                                type="checkbox"
-                                                id={id}
-                                                value={nombre}
-                                                checked={confirmStatus === "Confirmado" && true}
-                                                onChange={(e) => {
-                                                    cambiarConfirmacionIdInvitadoAConfirmar({ 
-                                                        confirmacion: e.target.checked, 
-                                                        id
-                                                    });                                                    
-                                                }}
-                                            />
-                                        :
-                                            <IndividualCheckbox 
-                                                type="checkbox"
-                                                id={id}
-                                                value={nombre}
-                                                checked={confirmStatus === "Confirmado" && true}
-                                                onChange={(e) => {
-                                                    cambiarConfirmacionIdInvitadoAConfirmar({ 
-                                                        confirmacion: e.target.checked, 
-                                                        id
-                                                    });
-                                                }}
-                                            />
-                                        }
-                                        <IndividualLabel htmlFor={id}>
-                                            <strong>{nombre}</strong>  -  <i>{confirmStatus}</i>
-                                        </IndividualLabel>
-                                    </MiembrosDiv>
-                                );
-                            })
-                        }
-                    </ContenedorMiembrosFamilia>
-                </ContenedorConfirmacionIndividual>}
+                    { opcionElegida === "Single" &&
+                        <ConfDesicionBtn 
+                            type="submit" 
+                            onClick={(e) => {
+                                actualizarFamilia(e);
+                                cambiarIrADespedida(!irADespedida);
+                            }}
+                        >
+                            Confirma tu Asistencia
+                        </ConfDesicionBtn>
+                    }
+                    
+                    { opcionElegida === "rechazado" &&
+                        <ConfDesicionBtn 
+                            type="submit" 
+                            onClick={(e) => {
+                                actualizarFamilia(e);
+                                cambiarIrADespedida(!irADespedida);
+                            }}
+                        >
+                            Enviar Respuesta
+                        </ConfDesicionBtn>
+                    }
 
-                <ConfDesicionBtn 
-                    type="submit" 
-                    onClick={(e) => {
-                        actualizarFamilia(e);
-                        cambiarIrADespedida(!irADespedida);
-                    }}
-                >
-                    Confirmar
-                </ConfDesicionBtn>
+                    { opcionElegida === "Familia completa" &&
+                        <ConfDesicionBtn 
+                            type="submit" 
+                            onClick={(e) => {
+                                actualizarFamilia(e);
+                                cambiarIrADespedida(!irADespedida);
+                            }}
+                        >
+                            Confirmar a tu Familia
+                        </ConfDesicionBtn>
+                    }
             </FormDecision>
-        </ContenedorConfirmacionDesicion>
+            
+            { opcionElegida === "Individualmente" &&
+                <ContenedorConfirmacionDesicion>
+                    <FormDecision action="">
+                            <ContenedorConfirmacionIndividual>
+                            <MiembrosFamiliaTitulo>
+                                Por favor selecciona a quienes seran parte de nuestra Boda
+                            </MiembrosFamiliaTitulo>
+                            <ContenedorMiembrosFamilia>
+                                {
+                                    familiaFiltradaPorCodigo.map(({ id, nombre, confirmStatus }) => {
+                                        return (
+                                            <MiembrosDiv key={id}>
+                                                {confirmStatus === "Confirmado" ?
+                                                    <IndividualCheckbox 
+                                                        type="checkbox"
+                                                        id={id}
+                                                        value={nombre}
+                                                        checked={confirmStatus === "Confirmado" && true}
+                                                        onChange={(e) => {
+                                                            cambiarConfirmacionIdInvitadoAConfirmar({ 
+                                                                confirmacion: e.target.checked, 
+                                                                id
+                                                            });                                                    
+                                                        }}
+                                                    />
+                                                :
+                                                    <IndividualCheckbox 
+                                                        type="checkbox"
+                                                        id={id}
+                                                        value={nombre}
+                                                        checked={confirmStatus === "Confirmado" && true}
+                                                        onChange={(e) => {
+                                                            cambiarConfirmacionIdInvitadoAConfirmar({ 
+                                                                confirmacion: e.target.checked, 
+                                                                id
+                                                            });
+                                                        }}
+                                                    />
+                                                }
+                                                <IndividualLabel htmlFor={id}>
+                                                    <strong>{nombre}</strong>  -  <i>{confirmStatus}</i>
+                                                </IndividualLabel>
+                                            </MiembrosDiv>
+                                        );
+                                    })
+                                }
+                            </ContenedorMiembrosFamilia>
+
+                            <ConfDesicionBtn 
+                                type="submit" 
+                                onClick={(e) => {
+                                    actualizarFamilia(e);
+                                    cambiarIrADespedida(!irADespedida);
+                                }}
+                            >
+                                Confirmar
+                            </ConfDesicionBtn>
+                        </ContenedorConfirmacionIndividual>
+                    </FormDecision>
+                </ContenedorConfirmacionDesicion>
+            }
+        </>
     );
 }
 
@@ -125,6 +175,7 @@ const FormDecision = styled.form`
     align-items: center;
 `;
 
+// eslint-disable-next-line no-unused-vars
 const ContenedorConfirmacionFamiliar = styled.p`
     display: flex;
     align-items: center;
@@ -163,7 +214,7 @@ const ConfDesicionBtn = styled.button`
     font-size: 1.5em;
     margin-top: 1em;
     margin-bottom: 0.7em;
-    width: 37%;
+    width: 100%;
     padding: 0.5em 0.7em;
     background: rgb(197, 127, 250);
     border-radius: 10px;
@@ -174,23 +225,32 @@ const ConfDesicionBtn = styled.button`
     }
 
     @media (max-width: 900px) {
-        font-size: 0.9em;
+        font-size: 1em;
+        padding: 1em 1.5em;
 	}
 `;
 
 const MiembrosDiv = styled.div`
     gap: 0.3em;
     display: flex;
+    align-content: center;
+    justify-content: center;
 `;
 
 const IndividualCheckbox = styled.input`
     cursor: pointer;
-    padding: 1em;
+    padding: 1.3rem;
     margin: auto;
-    height: 1.5em;
-    width: 1.5em;
-    margin-top: 0.3em;
+    height: 2rem;
+    width: 2rem;
+    margin-top: 0.8rem;
 
+    @media (max-width: 900px) {
+        font-size: 1.1em;
+        height: 1.1em;
+        width: 1.1em;
+        margin-top: 0.3em;
+	}
 `;
 
 const IndividualLabel = styled.label`

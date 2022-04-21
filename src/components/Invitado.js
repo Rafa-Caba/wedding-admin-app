@@ -84,8 +84,7 @@ const Invitado = ({ nombre, apellido, codigoFamilia, confirmStatus, id }) => {
             :
                 <>
                     <ContenedorNombre>
-                        <Nombre>{nombre}</Nombre>
-                        <Apellido>{apellido}</Apellido>
+                        <Nombre>{`${nombre} ${apellido}`}</Nombre>
                         <ConfirmStatus> - {confirmStatus}</ConfirmStatus>
                     </ContenedorNombre>
                     <Familia>Familia {apellido}</Familia>
@@ -149,6 +148,7 @@ const OpcionConfirmacion = styled.option`
 `;
 
 const ContenedorNombre = styled.div`
+    width: 100%;
     display: flex;
     font-size: 2em;
     justify-content: center;
@@ -172,6 +172,7 @@ const Familia = styled.p`
     margin: 0.5em
 `;
 
+// eslint-disable-next-line no-unused-vars
 const Apellido = styled.p`
 	font-weight: bold;
 `;

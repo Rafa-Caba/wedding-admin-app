@@ -8,7 +8,7 @@ const Contenedor = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 39em;
+    width: 90%;
     minWidth: 39em;
     minHeight: 20em;
 	margin: 1.5em auto;

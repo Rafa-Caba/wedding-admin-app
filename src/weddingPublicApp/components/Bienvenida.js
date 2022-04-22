@@ -70,6 +70,7 @@ const Boton = styled.button`
     justify-content: center;
     margin: auto;
     background: rgb(197, 127, 250);
+    color: black;
 	font-size: 1.5em;
     border-radius: 10px;
     border: rgb(212, 158, 253);

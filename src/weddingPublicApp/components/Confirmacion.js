@@ -36,7 +36,7 @@ const Confirmacion = () => {
                     { familiaFiltradaPorCodigo.length <= 1 ?
                         <>
                             <MsgSingle>
-                                Bienvenido {`${nombre} ${apellido}`}
+                                Bienvenido <strong>{`${nombre} ${apellido}`}</strong>
                             </MsgSingle>
                             <MsgIndOFam>
                                 Por favor confirma tu Asistencia:
@@ -82,7 +82,7 @@ const Confirmacion = () => {
                                 Bienvenida Familia
                             </MsgIndOFam>
                             <MsgFamilia>
-                                {apellido}
+                                <strong>{apellido}</strong>
                             </MsgFamilia>
                             <MsgIndOFam>
                                 Por favor confirma a tu <i>"Familia Completa"</i> si asistiran todos o si algunos integrantes de tu Familia
@@ -149,24 +149,24 @@ const MsgSingle = styled.p`
 `;
 
 const MsgFamilia = styled.p`
-    font-size: 3em;
+    font-size: 3.5em;
     text-align: center;
-    padding: 0 0 1em 0;
+    padding: 0 0 0.7em 0;
     margin: 0;
 
     @media (max-width: 900px) {
-		font-size: 2.2em;
+		font-size: 3.2em;
 	}
 `;
 
 const MsgIndOFam = styled.p`
-    font-size: 2em;
+    font-size: 2.5em;
     text-align: center;
-    padding: 0.5em 0.2em 1em 0.2em;
+    padding: 0.5em 0.2em 0.8em 0.2em;
     margin: 0;
 
     @media (max-width: 900px) {
-		font-size: 1.5em;
+		font-size: 2em;
 	}
 `;
 
@@ -206,6 +206,7 @@ const RadioInput = styled.input`
 const SubmitInput = styled.input`
     cursor: pointer;
     font-size: 1.2em;
+    color: black;
     margin-top: 0.8em;
     width: 50%;
     padding: 0.7em 0.7em;

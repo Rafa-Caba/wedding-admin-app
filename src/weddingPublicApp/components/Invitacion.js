@@ -107,7 +107,7 @@ const TextoDate = styled.p`
   padding: 1.2rem 0 1.2rem;
 
   @media (max-width: 500px) {
-    font-size: 1.7rem;
+    font-size: 1.8rem;
 	}
 `;
 
@@ -136,7 +136,7 @@ const Link = styled.a`
   @media (max-width: 500px) {
     width: 90%;
     padding: 1rem 0;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
 	}
 `;
 

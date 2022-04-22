@@ -241,11 +241,11 @@ const IndividualCheckbox = styled.input`
     cursor: pointer;
     padding: 1.3rem;
     margin: auto;
-    height: 2rem;
-    width: 2rem;
+    height: 1.5rem;
+    width: 1.5rem;
     margin-top: 0.8rem;
 
-    @media (max-width: 900px) {
+    @media (max-width: 500px) {
         font-size: 1.1em;
         height: 1.1em;
         width: 1.1em;
@@ -261,7 +261,7 @@ const IndividualLabel = styled.label`
     margin-top: 0.3em;
 
     @media (max-width: 900px) {
-        font-size: 1.1em;
+        font-size: 1.4em;
 	}
 `;
  

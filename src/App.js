@@ -6,6 +6,7 @@ import ListaFamilias from './components/ListaFamilias';
 import Bienvenida from './weddingPublicApp/components/Bienvenida';
 import Confirmacion from './weddingPublicApp/components/Confirmacion';
 import Despedida from './weddingPublicApp/components/Despedida';
+import ListaDeConfirmados from './components/ListaDeConfirmados';
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
 					<ContenedorAdmin>
 						<Titulo>Wedding Admin</Titulo>
 						<FormularioInvitado />
+						<ListaDeConfirmados />
 						<ListaFamilias />
 					</ContenedorAdmin>
 				} />
